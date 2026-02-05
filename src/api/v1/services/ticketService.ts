@@ -53,10 +53,9 @@ export const updateTicket = async (id: number,
     ): Promise<Tickets> => {
         const ticketIndex = sampleTickets.findIndex(ticket => ticket.id === id);
         
-        if (ticketIndex === -1) {
-            throw new Error("Ticket not found")
+        if(!updateData.priority){
+            throw new Error("Invalid priority. Must be one of: critical, high, medium, low")
         }
-        
         const modifiedTicket: Tickets = {
             ...sampleTickets[ticketIndex],
             ...updateData,
