@@ -56,6 +56,11 @@ export const updateTicket = async (id: number,
         if(!updateData.priority){
             throw new Error("Invalid priority. Must be one of: critical, high, medium, low")
         }
+
+        if(!updateData.status) {
+            throw new Error("Invalid status. Must be one of: open, in-progress, resolved")
+        }
+        
         const modifiedTicket: Tickets = {
             ...sampleTickets[ticketIndex],
             ...updateData,
