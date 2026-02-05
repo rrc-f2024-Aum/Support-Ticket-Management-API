@@ -79,3 +79,45 @@ export const deleteTicket = async (id: number): Promise<boolean> => {
     sampleTickets.splice(ticketIndex, 1)
     return true;
 };
+
+// Urgency calculation function
+export const calculateTicketUrgency = (ticket: Tickets): {
+    urgencyScore: number;
+    urgencyLevel: string;
+    ticketAge: number;
+} => {
+
+    const BASE_SCORES = {
+        critical: 50,
+        high: 30,
+        medium: 20,
+        low: 10
+    };
+
+    const ticketCreatedOn = new Date(ticket.createdAt);
+    const now = new Date();
+    const ticketAge = Math.floor((now.getTime() - ticketCreatedOn.getTime()) / (1000*60*60*24));
+
+    const baseScore = BASE_SCORES[ticket.priority];
+    const urgencyScore = baseScore + (ticketAge * 5);
+
+    let urgencyLevel: string;
+
+    if (ticket.status === "resolved") {
+        urgencyLevel = "Resolved. No action needed.";
+    } else if (urgencyScore <= 29) {
+        urgencyLevel = "Low Urgency. Address when capacity allows.";
+    } else if (urgencyScore <= 59) {
+        urgencyLevel = "Moderate. Schedule for attention.";
+    } else if (urgencyScore <= 79) {
+        urgencyLevel = "High Urgency. Prioritize soon.";
+    } else {
+        urgencyLevel = "Critical! Address immediately.";
+    }
+
+    return {
+        urgencyScore,
+        urgencyLevel,
+        ticketAge
+    }
+}
