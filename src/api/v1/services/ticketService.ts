@@ -25,7 +25,7 @@ export const createNewTicket = async (ticketData: {
     }
 
     const newTicket: Tickets = {
-        id: sampleTickets.length > 0 ? Math.max(...sampleTickets.map(t => t.id)) + 1 : 1,
+        id: sampleTickets.length > 0 ? Math.max(...sampleTickets.map(ticket => ticket.id)) + 1 : 1,
         title: ticketData.title,
         description: ticketData.description,
         priority: ticketData.priority,
@@ -38,8 +38,8 @@ export const createNewTicket = async (ticketData: {
 }
 
 // get ticket by ID 
-export const getTicketById = async (id: number): Promise<Tickets[] | undefined> => {
-    return sampleTickets;
+export const getTicketById = async (id: number): Promise<Tickets | undefined> => {
+    return sampleTickets.find(ticket=> ticket.id === id);
 }
 
 // update ticket
