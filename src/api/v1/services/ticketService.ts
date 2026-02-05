@@ -1,7 +1,7 @@
 import { Tickets, sampleTickets } from "src/data/ticketData";
 
 // Returns all the tickets.
-export const getAllTickets = (): Tickets[] => {
+export const getAllTickets = async (): Promise<Tickets[]> => {
     return sampleTickets;
 }
 
@@ -9,7 +9,7 @@ export const getAllTickets = (): Tickets[] => {
 export const createNewTicket = async (ticketData: {
     title: string,
     description: string,
-    priority: "low" |"medium" | "high" | "critical"
+    priority: "low" | "medium" | "high" | "critical"
 }): Promise<Tickets> => {
 
     if (!ticketData.title) {
@@ -38,5 +38,9 @@ export const createNewTicket = async (ticketData: {
 }
 
 // get ticket by ID 
-// update ticket  
+export const getTicketById = async (id: number): Promise<Tickets[] | undefined> => {
+    return sampleTickets;
+}
+
+// update ticket
 // delete ticket
