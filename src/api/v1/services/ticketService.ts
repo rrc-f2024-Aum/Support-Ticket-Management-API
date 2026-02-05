@@ -68,7 +68,14 @@ export const updateTicket = async (id: number,
         return modifiedTicket;
     };
 
-
-
-
 // delete ticket 
+export const deleteTicket = async (id: number): Promise<boolean> => {
+    const ticketIndex = sampleTickets.findIndex(ticket => ticket.id === id);
+
+    if (ticketIndex === -1) {
+        return false;
+    }
+
+    sampleTickets.splice(ticketIndex, 1)
+    return true;
+};
