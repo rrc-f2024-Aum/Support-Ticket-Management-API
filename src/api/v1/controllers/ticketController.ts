@@ -23,6 +23,21 @@ export const generateTicket = async (req: Request, res: Response): Promise<void>
 }
 
 // ticket only by id
+export const displayTicketById = async (req: Request, res: Response): Promise<void> => {
+    const idParam = Number(req.params.id)
+    const ticket = await ticketService.getTicketById(idParam);
+
+    if (!ticket) {
+        res.status(HTTP_STATUS.NOT_FOUND).json({
+            message: "Ticket not found"
+        });
+        return;
+    }
+    
+    res.status(HTTP_STATUS.OK).json({ message: "Ticket received successfully",
+        data: ticket
+    })
+}
 // update ticket details
 // delete ticket
 // calculate urgency 
