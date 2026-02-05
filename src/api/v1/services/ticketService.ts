@@ -42,5 +42,34 @@ export const getTicketById = async (id: number): Promise<Tickets | undefined> =>
     return sampleTickets.find(ticket=> ticket.id === id);
 }
 
-// update ticket
-// delete ticket
+// update ticket - priority and status
+export const updateTicket = async (id: number, 
+    updateData: {
+        title?: string,
+        description?: string,
+        priority?: "low" | "medium" | "high" | "critical",
+        status?: "open" | "in-progress" | "resolved"
+    }
+    ): Promise<Tickets> => {
+        const ticketIndex = sampleTickets.findIndex(ticket => ticket.id === id);
+        
+        if (ticketIndex === -1) {
+            throw new Error("Ticket not found")
+        }
+        
+        const modifiedTicket: Tickets = {
+            ...sampleTickets[ticketIndex],
+            ...updateData,
+            priority: updateData.priority || sampleTickets[ticketIndex].priority,
+            status: updateData.status || sampleTickets[ticketIndex].status
+        };
+
+        sampleTickets[ticketIndex] = modifiedTicket;
+
+        return modifiedTicket;
+    };
+
+
+
+
+// delete ticket 
