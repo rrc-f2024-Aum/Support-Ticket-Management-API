@@ -1,9 +1,12 @@
 import express, { Express } from "express";
+import morgan from "morgan";
+import ticketRoute from "./api/v1/routes/ticketRoute"
 
 const app: Express = express();
 
-app.get("/", (req, res) =>{
-    res.send("Assignment #2: Support Ticket Management API");
-});
+app.use(express.json());
+app.use(morgan('combined'));
+
+app.use("/api/v1", ticketRoute);
 
 export default app;
