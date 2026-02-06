@@ -1,4 +1,4 @@
-import { Tickets, sampleTickets } from "src/data/ticketData";
+import { Tickets, sampleTickets } from "../../../data/ticketData";
 
 // Returns all the tickets.
 export const getAllTickets = async (): Promise<Tickets[]> => {
