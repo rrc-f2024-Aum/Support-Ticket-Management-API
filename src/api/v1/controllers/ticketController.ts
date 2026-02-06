@@ -89,3 +89,26 @@ export const removeTicket = async (req: Request, res: Response): Promise<void> =
 }
 
 // calculate urgency 
+export const ticketUrgency = async (req: Request, res: Response): Promise<void> => {
+    const idParam = Number(req.params.id);
+    const ticket = await ticketService.getTicketById(idParam);
+
+    if(!ticket) {
+        res.status(HTTP_STATUS.NOT_FOUND).json({
+            message: "Ticket not found"
+        });
+        return;
+    }
+
+    const data = ticketService.calculateTicketUrgency(ticket);
+
+    res.status(HTTP_STATUS.OK).json({
+        message: "Urgency calculated successfully",
+        data : {
+            id: ticket.id,
+            title: ticket.title,
+            data
+        }
+    });
+    
+}
