@@ -71,4 +71,21 @@ export const updateTicketDetails = async (req: Request, res: Response): Promise<
 }
 
 // delete ticket
+export const removeTicket = async (req: Request, res: Response): Promise<void> => {
+    const idParam = Number(req.params.id);
+    const isDeleted = await ticketService.deleteTicket(idParam);
+
+    if(!isDeleted) {
+        res.status(HTTP_STATUS.NOT_FOUND).json({
+            message: "Ticket not found"
+        });
+        return;
+    }
+
+    res.status(HTTP_STATUS.OK).json({
+        message: "Ticket deleted successfully"
+    });
+
+}
+
 // calculate urgency 
