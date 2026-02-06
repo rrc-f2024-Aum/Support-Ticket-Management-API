@@ -12,18 +12,6 @@ export const createNewTicket = async (ticketData: {
     priority: "low" | "medium" | "high" | "critical"
 }): Promise<Tickets> => {
 
-    if (!ticketData.title) {
-        throw new Error("Missing required field: title")
-    }
-
-    if (!ticketData.description) {
-        throw new Error("Missing required field: description")
-    }
-
-    if (!ticketData.priority) {
-        throw new Error("Invalid priority. Must be one of: critical, high, medium, low")
-    }
-
     const newTicket: Tickets = {
         id: sampleTickets.length > 0 ? Math.max(...sampleTickets.map(ticket => ticket.id)) + 1 : 1,
         title: ticketData.title,
@@ -39,39 +27,33 @@ export const createNewTicket = async (ticketData: {
 
 // get ticket by ID 
 export const getTicketById = async (id: number): Promise<Tickets | undefined> => {
-    return sampleTickets.find(ticket=> ticket.id === id);
+    return sampleTickets.find(ticket => ticket.id === id);
 }
 
 // update ticket - priority and status
-export const updateTicket = async (id: number, 
+export const updateTicket = async (id: number,
     updateData: {
         title?: string,
         description?: string,
         priority?: "low" | "medium" | "high" | "critical",
         status?: "open" | "in-progress" | "resolved"
     }
-    ): Promise<Tickets> => {
-        const ticketIndex = sampleTickets.findIndex(ticket => ticket.id === id);
-        
-        if(!updateData.priority){
-            throw new Error("Invalid priority. Must be one of: critical, high, medium, low")
-        }
+): Promise<Tickets> => {
+    const ticketIndex = sampleTickets.findIndex(ticket => ticket.id === id);
 
-        if(!updateData.status) {
-            throw new Error("Invalid status. Must be one of: open, in-progress, resolved")
-        }
-        
-        const modifiedTicket: Tickets = {
-            ...sampleTickets[ticketIndex],
-            ...updateData,
-            priority: updateData.priority || sampleTickets[ticketIndex].priority,
-            status: updateData.status || sampleTickets[ticketIndex].status
-        };
 
-        sampleTickets[ticketIndex] = modifiedTicket;
 
-        return modifiedTicket;
+    const modifiedTicket: Tickets = {
+        ...sampleTickets[ticketIndex],
+        ...updateData,
+        priority: updateData.priority || sampleTickets[ticketIndex].priority,
+        status: updateData.status || sampleTickets[ticketIndex].status
     };
+
+    sampleTickets[ticketIndex] = modifiedTicket;
+
+    return modifiedTicket;
+};
 
 // delete ticket 
 export const deleteTicket = async (id: number): Promise<boolean> => {
@@ -101,7 +83,7 @@ export const calculateTicketUrgency = (ticket: Tickets): {
 
     const ticketCreatedOn = new Date(ticket.createdAt);
     const now = new Date();
-    const ticketAge = Math.floor((now.getTime() - ticketCreatedOn.getTime()) / (1000*60*60*24));
+    const ticketAge = Math.floor((now.getTime() - ticketCreatedOn.getTime()) / (1000 * 60 * 60 * 24));
 
     const baseScore = BASE_SCORES[ticket.priority];
     const urgencyScore = baseScore + (ticketAge * 5);
