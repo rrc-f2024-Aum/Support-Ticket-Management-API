@@ -1,5 +1,6 @@
 import express, { Router } from "express";
 import {
+    checkHealth,
     displayAllTickets,
     displayTicketById,
     generateTicket,
@@ -10,6 +11,7 @@ import {
 
 const router: Router = express.Router();
 
+router.get('/health', checkHealth)
 router.get('/tickets', displayAllTickets);
 router.get('/tickets/:id', displayTicketById);
 router.post('/tickets', generateTicket);

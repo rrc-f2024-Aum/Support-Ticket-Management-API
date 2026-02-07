@@ -1,5 +1,14 @@
 import { Tickets, sampleTickets } from "../../../data/ticketData";
 
+// health check
+export const getHealthStatus = () => {
+    return {
+        status: "Ok",
+        uptime: process.uptime(),
+        timestamp: new Date().toISOString(),
+        version: "1.0.0"
+    }
+}
 // Returns all the tickets.
 export const getAllTickets = async (): Promise<Tickets[]> => {
     return sampleTickets;

@@ -2,6 +2,12 @@ import { Request, Response } from "express";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import * as ticketService from "../services/ticketService";
 
+// health check
+export const checkHealth = (req: Request, res: Response): void => {
+    const healthData = ticketService.getHealthStatus();
+    res.json(healthData);
+};
+
 // all tickets
 export const displayAllTickets = async (req: Request, res: Response): Promise<void> => {
     const tickets = await ticketService.getAllTickets();
