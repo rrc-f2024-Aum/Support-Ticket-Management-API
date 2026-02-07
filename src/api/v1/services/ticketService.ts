@@ -103,8 +103,8 @@ export const calculateTicketUrgency = (ticket: Tickets): {
     }
 
     return {
+        ticketAge,
         urgencyScore,
-        urgencyLevel,
-        ticketAge
+        urgencyLevel  
     }
 }

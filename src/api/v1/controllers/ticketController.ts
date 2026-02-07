@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
-import { HTTP_STATUS } from "src/constants/httpConstants";
+import { HTTP_STATUS } from "../../../constants/httpConstants";
 import * as ticketService from "../services/ticketService";
 
 // all tickets
 export const displayAllTickets = async (req: Request, res: Response): Promise<void> => {
     const tickets = await ticketService.getAllTickets();
     res.status(HTTP_STATUS.OK).send({
-        message: "Tickets Received.",
+        message: "Tickets retrieved",
+        count: tickets.length,
         data: tickets
     });
 }
@@ -138,7 +139,10 @@ export const ticketUrgency = async (req: Request, res: Response): Promise<void> 
         data : {
             id: ticket.id,
             title: ticket.title,
-            data
+            priority: ticket.priority,
+            status: ticket.status,
+            createdAt: ticket.createdAt,
+            ...data
         }
     });
     
