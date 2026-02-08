@@ -92,10 +92,10 @@ export const calculateTicketUrgency = (ticket: Tickets): {
 
     const ticketCreatedOn = new Date(ticket.createdAt);
     const now = new Date();
-    const ticketAge = Math.floor((now.getTime() - ticketCreatedOn.getTime()) / (1000 * 60 * 60 * 24));
-
+    const ticketAge = ((now.getTime() - ticketCreatedOn.getTime()) / (1000 * 60 * 60 * 24));
+    const ticketAgeDisplay = Math.floor(ticketAge)
     const baseScore = BASE_SCORES[ticket.priority];
-    const urgencyScore = baseScore + (ticketAge * 5);
+    const urgencyScore = Math.floor(baseScore + (ticketAge * 5));
 
     let urgencyLevel: string;
 
@@ -112,8 +112,8 @@ export const calculateTicketUrgency = (ticket: Tickets): {
     }
 
     return {
-        ticketAge,
-        urgencyScore,
+        ticketAge: ticketAgeDisplay,
+        urgencyScore: urgencyScore,
         urgencyLevel  
     }
 }
