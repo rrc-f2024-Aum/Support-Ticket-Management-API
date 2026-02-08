@@ -69,5 +69,13 @@ export const sampleTickets: Tickets[] = [
         priority: "medium",
         status: "resolved",
         createdAt: daysAgo(10)
+    },
+    {
+        id: 8,
+        title: "Threshold test",
+        description: "urgency score fo 29",
+        priority: "low",
+        status: "open",
+        createdAt: new Date(Date.now() - (3.8 * 24 * 60 * 60 * 1000)).toISOString()
     }
 ];
