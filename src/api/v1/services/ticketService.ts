@@ -100,7 +100,7 @@ export const calculateTicketUrgency = (ticket: Tickets): {
     let urgencyLevel: string;
 
     if (ticket.status === "resolved") {
-        urgencyLevel = "Minimum.Ticket resolved.";
+        urgencyLevel = "Minimal.Ticket resolved.";
     } else if (urgencyScore <= 10) {
         urgencyLevel = "Low Urgency. Address when capacity allows.";
     } else if (urgencyScore <= 54) {
