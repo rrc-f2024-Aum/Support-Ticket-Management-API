@@ -22,28 +22,31 @@ export const displayAllTickets = async (req: Request, res: Response): Promise<vo
 export const generateTicket = async (req: Request, res: Response): Promise<void> => {
     const { title, description, priority } = req.body;
 
-    if (!title) {
+    const trimTitle = title?.trim();
+    const trimDescription = description?.trim();
+
+    if (!trimTitle || trimTitle === "" ) {
         res.status(HTTP_STATUS.BAD_REQUEST).json({
             message: "Missing required field: title"
         });
         return;
     }
 
-    if (!description) {
+    if (!trimDescription || trimDescription === "") {
         res.status(HTTP_STATUS.BAD_REQUEST).json({
             message: "Missing required field: description"
         });
         return;
     }
 
-    if (!priority) {
+    if (!priority || !['critical', 'high', 'medium', 'low'].includes(priority)) {
         res.status(HTTP_STATUS.BAD_REQUEST).json({
             message: "Invalid priority. Must be one of: critical, high, medium, low"
         });
         return;
     }
     const addTicket = await ticketService.createNewTicket({
-        title, description, priority
+        title: trimTitle, description: trimDescription, priority
     });
     res.status(HTTP_STATUS.CREATED).json({
         message: "Ticket created successfully", 
